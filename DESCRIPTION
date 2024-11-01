@@ -1,0 +1,19 @@
+Package: CoxianPhaseTypeR
+Title: Fitting Coxian Phase-Type Distributions using EM Algorithm
+Version: 0.1.0
+Authors@R: c(
+    person("Dulan", "Dias", email = "ddias01@qub.ac.uk", role = c("aut", "cre"))
+)
+Description: An R package for fitting Coxian Phase-Type distributions using the Expectation-Maximization (EM) algorithm based on the generalized formulas derived by Sheldon Ross. Supports parameter estimation, PDF evaluation, and survival probability computation for applications in survival analysis and other domains requiring phase-type distributions.
+License: GPL-3
+Depends: R (>= 4.0.0)
+Imports:
+    stats,
+    Matrix,
+    expm
+Suggests:
+    testthat (>= 3.0.0),
+    roxygen2
+LazyData: true
+Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
