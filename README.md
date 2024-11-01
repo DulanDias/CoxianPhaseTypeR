@@ -13,4 +13,4 @@ Install from GitHub (requires `devtools` package):
 
 ```r
 # install.packages("devtools")
-devtools::install_github("yourusername/CoxianPhaseTypeR")
+devtools::install_github("DulanDias/CoxianPhaseTypeR")
