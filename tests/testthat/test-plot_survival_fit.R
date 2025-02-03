@@ -1,4 +1,4 @@
-test_that("plot_survival_fit generates a ggplot object", {
+test_that("plot_survival_fit generates a ggplot object with goodness-of-fit metrics", {
   library(ggplot2)
 
   set.seed(123)
