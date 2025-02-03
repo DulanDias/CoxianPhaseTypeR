@@ -1,17 +1,34 @@
 Package: CoxianPhaseTypeR
-Title: Fitting Coxian Phase-Type Distributions using EM Algorithm
+Title: Fitting Coxian Phase-Type Distributions Using the EM Algorithm
 Version: 1.0.0
-Authors@R: c(person("Dulan", "Dias", email = "ddias01@qub.ac.uk", role = c("aut", "cre")),person("Adele", "Marshall", email = "a.h.marshall@qub.ac.uk", role = "aut"),person("Aleksandar", "Novakovic", email = "a.novakovic@qub.ac.uk", role = "aut"))
-Description: An R package for fitting Coxian Phase-Type distributions using the Expectation-Maximization (EM) algorithm based on the generalized formulas derived by Sheldon Ross. Supports parameter estimation, PDF evaluation, and survival probability computation for applications in survival analysis and other domains requiring phase-type distributions.
+Authors@R: c(
+    person("Dulan", "Dias", email = "ddias01@qub.ac.uk", role = c("aut", "cre")),
+    person("Adele", "Marshall", email = "a.h.marshall@qub.ac.uk", role = "aut"),
+    person("Aleksandar", "Novakovic", email = "a.novakovic@qub.ac.uk", role = "aut")
+)
+Description: 
+    An R package for fitting Coxian Phase-Type distributions using the 
+    Expectation-Maximization (EM) algorithm based on the generalized formulas 
+    derived by Sheldon Ross. Supports parameter estimation, probability density 
+    function (PDF) evaluation, survival probability computation, and automatic 
+    model selection via information criteria (AIC/BIC). Provides simulation 
+    tools and visualization functions for assessing model fit in applications 
+    such as survival analysis, queueing models, and reliability engineering.
 License: GPL-3
-Depends: R (>= 4.0.0)
+Depends: 
+    R (>= 4.0.0)
 Imports:
     stats,
     Matrix,
-    expm
+    expm,
+    ggplot2,
+    survival
 Suggests:
     testthat (>= 3.0.0),
-    roxygen2
+    roxygen2,
+    knitr,
+    rmarkdown
 LazyData: true
 Encoding: UTF-8
 RoxygenNote: 7.2.3
+VignetteBuilder: knitr
