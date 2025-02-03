@@ -24,8 +24,8 @@ compute_goodness_of_fit <- function(fit, data) {
   empirical_survival <- km_survival(t_values)
   rmse <- sqrt(mean((empirical_survival - model_survival)^2))
 
-  # Compute KS statistic
-  ks_stat <- ks.test(empirical_survival, model_survival)$statistic
+  # Compute KS statistic, suppressing warnings for ties
+  ks_stat <- suppressWarnings(ks.test(empirical_survival, model_survival)$statistic)
 
   return(list(RMSE = rmse, KS_statistic = ks_stat))
 }

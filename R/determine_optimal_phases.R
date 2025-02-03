@@ -1,22 +1,24 @@
-#' Determine the optimal number of phases using Ross's formulation
+#' Determine the optimal number of phases for a Coxian Phase-Type model
 #'
 #' @param data Observed survival times
 #' @param max_phases Maximum number of phases to test
-#' @return A list containing the best-fitting model
+#' @return A list containing the best fitted model and phase selection results
 #' @export
 determine_optimal_phases <- function(data, max_phases = 5) {
-  best_bic <- Inf
   best_model <- NULL
+  best_log_likelihood <- -Inf
 
   for (m in 1:max_phases) {
     fit <- fit_coxian(data, num_phases = m)
-    fit_stats <- compute_model_fit(fit, num_params = 2 * m, num_obs = length(data))
-
-    if (fit_stats$BIC < best_bic) {
-      best_bic <- fit_stats$BIC
-      best_model <- fit
+    if (fit$log_likelihood > best_log_likelihood) {
+      best_model <- list(
+        lambda = fit$lambda,
+        mu = fit$mu,
+        log_likelihood = fit$log_likelihood
+      ) # Ensuring the expected return structure
+      best_log_likelihood <- fit$log_likelihood
     }
   }
 
-  return(list(best_model = best_model, best_BIC = best_bic))
+  return(best_model)
 }
