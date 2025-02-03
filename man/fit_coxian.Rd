@@ -2,9 +2,9 @@
 % Please edit documentation in R/fit_coxian.R
 \name{fit_coxian}
 \alias{fit_coxian}
-\title{Fit a Coxian Phase-Type model using Ross's formulation}
+\title{Fit a Coxian Phase-Type model using Ross's formulation with log-likelihood tracking}
 \usage{
-fit_coxian(data, num_phases, max_iter = 500, tol = 1e-06)
+fit_coxian(data, num_phases, max_iter = 500, tol = 1e-06, verbose = FALSE)
 }
 \arguments{
 \item{data}{Observed survival times}
@@ -13,11 +13,13 @@ fit_coxian(data, num_phases, max_iter = 500, tol = 1e-06)
 
 \item{max_iter}{Maximum EM iterations}
 
-\item{tol}{Convergence tolerance}
+\item{tol}{Convergence threshold for log-likelihood improvement}
+
+\item{verbose}{If TRUE, prints log-likelihood at each iteration}
 }
 \value{
-A list containing estimated parameters
+A list containing estimated parameters and convergence diagnostics
 }
 \description{
-Fit a Coxian Phase-Type model using Ross's formulation
+Fit a Coxian Phase-Type model using Ross's formulation with log-likelihood tracking
 }

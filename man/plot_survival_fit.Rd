@@ -2,18 +2,18 @@
 % Please edit documentation in R/plot_survival_fit.R
 \name{plot_survival_fit}
 \alias{plot_survival_fit}
-\title{Plot survival function using Ross's equation}
+\title{Plot survival function with goodness-of-fit metrics}
 \usage{
 plot_survival_fit(fit, data)
 }
 \arguments{
-\item{fit}{Fitted Coxian-PH model}
+\item{fit}{A fitted Coxian-PH model}
 
 \item{data}{Observed survival times}
 }
 \value{
-A ggplot object
+A ggplot object with RMSE and KS statistic displayed
 }
 \description{
-Plot survival function using Ross's equation
+Plot survival function with goodness-of-fit metrics
 }
