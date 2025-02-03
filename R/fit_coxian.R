@@ -22,7 +22,11 @@ fit_coxian <- function(data, num_phases, max_iter = 500, tol = 1e-6, verbose = F
         prob_i * (lambda[i] + mu[i]) * exp(-(lambda[i] + mu[i]) * t)
       }))
     })
-    sum(log(likelihoods))
+
+    # Handle NaN or Inf values
+    likelihoods[is.na(likelihoods) | is.infinite(likelihoods)] <- .Machine$double.eps
+
+    return(sum(log(likelihoods)))
   }
 
   log_likelihood_old <- -Inf
