@@ -11,9 +11,9 @@ fit_coxian(data, num_phases, max_iter = 500, tol = 1e-06, verbose = FALSE)
 
 \item{num_phases}{Number of phases}
 
-\item{max_iter}{Maximum EM iterations}
+\item{max_iter}{Maximum EM iterations (default: 500)}
 
-\item{tol}{Convergence threshold for log-likelihood improvement}
+\item{tol}{Convergence threshold for log-likelihood improvement (default: 1e-6)}
 
 \item{verbose}{If TRUE, prints log-likelihood at each iteration}
 }

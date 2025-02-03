@@ -2,18 +2,19 @@
 % Please edit documentation in R/determine_optimal_phases.R
 \name{determine_optimal_phases}
 \alias{determine_optimal_phases}
-\title{Determine the optimal number of phases using Ross's formulation}
+\title{Determine the optimal number of phases for Coxian Phase-Type fitting}
 \usage{
 determine_optimal_phases(data, max_phases = 5)
 }
 \arguments{
-\item{data}{Observed survival times}
+\item{data}{A numeric vector of observed survival times.}
 
-\item{max_phases}{Maximum number of phases to test}
+\item{max_phases}{The maximum number of phases to test (default: 5).}
 }
 \value{
-A list containing the best-fitting model
+A list containing the best model, its estimated parameters, and the corresponding BIC.
 }
 \description{
-Determine the optimal number of phases using Ross's formulation
+This function iteratively fits Coxian-PH models with different phase numbers (m = 1 to max_phases)
+and selects the best model based on the Bayesian Information Criterion (BIC).
 }
