@@ -1,0 +1,40 @@
+---
+title: "Fitting Coxian Phase-Type Distributions in R"
+author: "Dulan Dias, Adele Marshall, and Aleksandar Novakovic"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Fitting Coxian Phase-Type Distributions in R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```r
+# Load the package
+library(CoxianPhaseTypeR)
+
+# Example: Simulating survival data from a 3-phase Coxian-PH model
+set.seed(123)
+data <- simulate_coxian(n = 100, lambda = c(2.0, 1.5, 1.2), mu = c(1.0, 0.8, 0.6))
+
+# Fit a Coxian-PH model
+fit <- fit_coxian(data, num_phases = 3)
+
+# Print estimated parameters
+print(fit)
+
+# Evaluate model performance
+model_fit <- compute_model_fit(fit, num_params = 6, num_obs = 100)
+print(model_fit)
+
+# Determine the optimal number of phases
+best_model <- determine_optimal_phases(data, max_phases = 5)
+print(best_model)
+
+# Plot the fitted PDF
+plot_coxian(fit)
+
+# Plot the survival function against the Kaplan-Meier estimate
+plot_survival_fit(fit, data)
+
+```
