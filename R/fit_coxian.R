@@ -30,7 +30,7 @@ fit_coxian <- function(data, num_phases, max_iter = 500, tol = 1e-6, verbose = F
 
     # Handle NaN or Inf values
     likelihoods[is.na(likelihoods) | is.infinite(likelihoods)] <- .Machine$double.eps
-    return(sum(log(likelihoods)))
+    return(sum(log(pmax(likelihoods, 1e-10))) )
   }
 
   # Initialize log-likelihood tracking

@@ -2,18 +2,15 @@
 % Please edit documentation in R/plot_survival_fit.R
 \name{plot_survival_fit}
 \alias{plot_survival_fit}
-\title{Plot survival function with goodness-of-fit metrics}
+\title{Plot Kaplan-Meier vs Coxian-PH survival curve}
 \usage{
 plot_survival_fit(fit, data)
 }
 \arguments{
 \item{fit}{A fitted Coxian-PH model}
 
-\item{data}{Observed survival times}
-}
-\value{
-A ggplot object with RMSE and KS statistic displayed
+\item{data}{Survival time data used for fitting}
 }
 \description{
-Plot survival function with goodness-of-fit metrics
+Plot Kaplan-Meier vs Coxian-PH survival curve
 }

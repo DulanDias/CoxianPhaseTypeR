@@ -1,23 +1,30 @@
-#' Plot survival function with goodness-of-fit metrics
+#' Plot Kaplan-Meier vs Coxian-PH survival curve
 #'
 #' @param fit A fitted Coxian-PH model
-#' @param data Observed survival times
-#' @return A ggplot object with RMSE and KS statistic displayed
+#' @param data Survival time data used for fitting
 #' @export
 plot_survival_fit <- function(fit, data) {
+  library(survival)
   library(ggplot2)
 
-  # Compute survival function from fitted Coxian-PH model
-  survival_times <- seq(min(data), max(data), length.out = 100)
-  model_survival <- sapply(survival_times, function(t) exp(-sum(fit$lambda * t)))
+  # Compute Kaplan-Meier survival estimate
+  km_fit <- survfit(Surv(data) ~ 1)
+  km_df <- data.frame(time = km_fit$time, survival = km_fit$surv)
 
-  df_survival <- data.frame(time = survival_times, survival = model_survival)
+  # Compute survival estimates from the Coxian-PH model
+  model_times <- seq(min(data), max(data), length.out = 100)
+  model_survival <- sapply(model_times, function(t) exp(-sum(fit$lambda * t)))
 
-  ggplot(df_survival, aes(x = time, y = survival)) +
-    geom_step(linewidth = 1.2, color = "blue", aes(linetype = "Model")) +
-    geom_step(aes(x = time, y = survfit(Surv(data) ~ 1)$surv, linetype = "Kaplan-Meier"), color = "black") +
-    labs(title = "Kaplan-Meier vs. Coxian-PH Survival Curve",
-         x = "Time", y = "Survival Probability") +
-    scale_linetype_manual(name = "Legend", values = c("Model" = "solid", "Kaplan-Meier" = "dashed")) +
+  model_df <- data.frame(time = model_times, survival = model_survival)
+
+  # Plot both survival curves
+  ggplot() +
+    geom_step(data = km_df, aes(x = time, y = survival, linetype = "Kaplan-Meier"), color = "black") +
+    geom_line(data = model_df, aes(x = time, y = survival, linetype = "Coxian-PH Model"), color = "blue", size = 1) +
+    scale_linetype_manual(values = c("Kaplan-Meier" = "dashed", "Coxian-PH Model" = "solid")) +
+    labs(title = "Kaplan-Meier vs Coxian-PH Model Survival Curve",
+         x = "Time",
+         y = "Survival Probability",
+         linetype = "Model") +
     theme_minimal()
 }
