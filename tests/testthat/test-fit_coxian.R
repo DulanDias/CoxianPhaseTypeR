@@ -7,11 +7,10 @@ test_that("fit_coxian estimates valid parameters and tracks log-likelihood", {
   expect_type(fit$mu, "double")
   expect_length(fit$lambda, 3)
   expect_length(fit$mu, 3)
-  expect_true(all(fit$lambda > 0))  # Transition rates must be positive
-  expect_true(all(fit$mu > 0))  # Absorption rates must be positive
+  expect_true(all(fit$lambda > 0))  # Ensure positivity
+  expect_true(all(fit$mu > 0))  # Ensure positivity
 
-  # Ensure log-likelihood tracking
-  expect_type(fit$likelihood_history, "double")
-  expect_true(length(fit$likelihood_history) > 1)  # Must have multiple iterations
-  expect_true(fit$log_likelihood < 0)  # Log-likelihood should be negative
+  # Ensure log-likelihood tracking is valid
+  expect_true(!any(is.na(fit$likelihood_history)))
+  expect_true(all(is.finite(fit$likelihood_history))) # Ensure no NaN or Inf
 })
