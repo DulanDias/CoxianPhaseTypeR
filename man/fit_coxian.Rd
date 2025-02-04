@@ -2,35 +2,35 @@
 % Please edit documentation in R/fit_coxian.R
 \name{fit_coxian}
 \alias{fit_coxian}
-\title{Fit a Coxian Phase-Type model using Ross's formulation with log-likelihood tracking
-and multiple random initializations}
+\title{Fit a Coxian Phase-Type distribution using an EM algorithm with multiple random initializations}
 \usage{
 fit_coxian(
   data,
   num_phases,
-  max_iter = 500,
+  max_iter = 1000,
   tol = 1e-06,
   verbose = FALSE,
-  n_initializations = 10
+  n_initializations = 20
 )
 }
 \arguments{
-\item{data}{Observed survival times}
+\item{data}{A numeric vector of observed survival times.}
 
-\item{num_phases}{Number of phases}
+\item{num_phases}{Number of phases \(m\) in the Coxian model.}
 
-\item{max_iter}{Maximum EM iterations (default: 500)}
+\item{max_iter}{Maximum number of EM iterations (default: 1000).}
 
-\item{tol}{Convergence threshold for log-likelihood improvement (default: 1e-6)}
+\item{tol}{Convergence threshold on the change in log-likelihood (default: 1e-6).}
 
-\item{verbose}{If TRUE, prints log-likelihood at each iteration}
+\item{verbose}{If TRUE, prints iteration-by-iteration progress.}
 
-\item{n_initializations}{Number of random initializations (default: 10)}
+\item{n_initializations}{Number of random EM initializations (default: 20).}
 }
 \value{
-A list containing the best estimated parameters and diagnostics from all runs
+A list with the best estimates for \code{lambda} and \code{mu}, the log-likelihood,
+        the number of iterations, and the log-likelihood history for each run.
 }
 \description{
-Fit a Coxian Phase-Type model using Ross's formulation with log-likelihood tracking
-and multiple random initializations
+This function estimates the parameters of a Coxian Phase-Type distribution using an
+Expectation-Maximization (EM) algorithm based on the generalized formulation by Sheldon Ross.
 }

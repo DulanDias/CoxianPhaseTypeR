@@ -2,20 +2,20 @@
 % Please edit documentation in R/simulate_coxian.R
 \name{simulate_coxian}
 \alias{simulate_coxian}
-\title{Simulate survival data using Ross's formulation for Coxian-PH distributions}
+\title{Simulate survival data using a Coxian Phase-Type distribution}
 \usage{
 simulate_coxian(n, lambda, mu)
 }
 \arguments{
 \item{n}{Number of observations to generate}
 
-\item{lambda}{Vector of transition rates}
+\item{lambda}{Vector of transition rates (one per phase). The last element should be 0.}
 
-\item{mu}{Vector of absorption rates}
+\item{mu}{Vector of absorption rates (one per phase)}
 }
 \value{
 A numeric vector of simulated survival times
 }
 \description{
-Simulate survival data using Ross's formulation for Coxian-PH distributions
+Simulate survival data using a Coxian Phase-Type distribution
 }

@@ -15,6 +15,7 @@ This vignette demonstrates how to apply the `CoxianPhaseTypeR` package to both *
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 devtools::install()
+devtools::load_all()
 library(CoxianPhaseTypeR)
 library(ggplot2)
 library(survival)
@@ -26,15 +27,26 @@ library(gridExtra)
 
 ## Generate Data
 ```{r}
-set.seed(42)
-sim_data <- simulate_coxian(n = 200, lambda = c(2.0, 1.5, 1.2), mu = c(1.0, 0.8, 0.6))
+set.seed(123)
+sim_data <- simulate_coxian(n = 200, lambda = c(2.0, 1.5, 0), mu = c(1.0, 0.8, 0.6))
 head(sim_data)
 ```
 
 ## Fit Coxian-PH Model
 ```{r}
 fit <- fit_coxian(sim_data, num_phases = 3)
-print(fit)
+```
+
+```{r}
+print(fit$lambda)
+```
+
+```{r}
+print(fit$mu)
+```
+
+```{r}
+print(fit$log_likelihood)
 ```
 
 ## Model Evaluation (AIC, BIC, Log-Likelihood)
@@ -42,13 +54,6 @@ print(fit)
 model_fit <- compute_model_fit(fit, num_params = 6, num_obs = length(sim_data))
 print(model_fit)
 ```
-
-## Determine Optimal Phases
-```{r}
-best_model <- determine_optimal_phases(sim_data, max_phases = 5)
-print(best_model)
-```
-
 ## Goodness-of-fit statistics
 ```{r}
 compute_goodness_of_fit(fit, sim_data)
@@ -100,17 +105,12 @@ summary(real_data)
 # Histogram to check distribution
 hist(real_data, breaks = 30, main = "Distribution of Lung Cancer Survival Times", xlab = "Survival Time (days)")
 ```
+
 Since the data contains very large values or outliers, normalize the survival times:
 ```{r}
 real_data <- real_data / max(real_data)
 ```
 
-
-## Fit Coxian-PH Model
-```{r}
-fit_real <- fit_coxian(real_data, num_phases = 3)
-print(fit_real)
-```
 
 ## Model Selection
 ```{r}
@@ -118,57 +118,42 @@ best_model_real <- determine_optimal_phases(real_data, max_phases = 5)
 print(best_model_real)
 ```
 
+## Model Evaluation (AIC, BIC, Log-Likelihood)
+```{r}
+model_fit <- compute_model_fit(best_model_real$best_model, num_params = 4, num_obs = length(real_data))
+print(model_fit)
+```
+
+
 ## Goodness-of-fit statistics
 ```{r}
-compute_goodness_of_fit(fit_real, real_data)
+compute_goodness_of_fit(best_model_real$best_model, real_data)
 ```
 
 ## Visualization
 
 ### Kaplan-Meier vs Coxian-PH for Real Data
 ```{r}
-plot_survival_fit(fit_real, real_data)
+plot_survival_fit(best_model_real$best_model, real_data)
 ```
 
 ### State Transition Diagram (Real Data)
 ```{r}
-plot_coxian(fit_real)
+plot_coxian(best_model_real$best_model)
 ```
 
-# Summary of Results
-
-## Estimated Parameters
-```{r}
-df_params <- data.frame(
-  Phase = 1:3,
-  Lambda = fit$lambda,
-  Mu = fit$mu
-)
-print(df_params)
-```
-
-## Model Selection Metrics
-```{r}
-df_model_fit <- data.frame(
-  Model = c("Simulated Data", "Real Data"),
-  LogLikelihood = c(model_fit$log_likelihood, best_model_real$best_model$log_likelihood),
-  AIC = c(model_fit$AIC, best_model_real$best_model$AIC),
-  BIC = c(model_fit$BIC, best_model_real$best_model$BIC)
-)
-print(df_model_fit)
-```
 
 Download Plots
 ```{r}
-ggsave("kaplan_vs_coxian_simulated.png", plot_survival_fit(fit, sim_data))
-ggsave("state_transition_simulated.png", plot_coxian(fit))
+ggsave("kaplan_vs_coxian_simulated.png", plot_survival_fit(fit, sim_data), dpi = 300)
+ggsave("state_transition_simulated.png", plot_coxian(fit), dpi = 300)
 
-ggsave("kaplan_vs_coxian_real.png", plot_survival_fit(fit_real, real_data))
-ggsave("state_transition_real.png", plot_coxian(fit_real))
+ggsave("kaplan_vs_coxian_real.png", plot_survival_fit(best_model_real$best_model, real_data), dpi = 300)
+ggsave("state_transition_real.png", plot_coxian(best_model_real$best_model), dpi = 300)
 ```
 
 ```{r}
 ggsave("log_likelihood_simulated.png", plot_log_likelihood(fit), dpi = 300)
-ggsave("log_likelihood_real.png", plot_log_likelihood(fit_real), dpi = 300)
+ggsave("log_likelihood_real.png", plot_log_likelihood(best_model_real$best_model), dpi = 300)
 ```
 
