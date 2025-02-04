@@ -1,4 +1,4 @@
-#' Simulate survival data using Ross's formulation for Coxian-PH distributions
+#' Simulate survival data using a Coxian Phase-Type distribution
 #'
 #' @param n Number of observations to generate
 #' @param lambda Vector of transition rates
@@ -8,6 +8,13 @@
 simulate_coxian <- function(n, lambda, mu) {
   if (length(lambda) != length(mu)) {
     stop("lambda and mu must have the same length (number of phases).")
+  }
+
+  # Ensure last transition rate is zero
+  if (lambda[length(lambda)] != 0) {
+    warning(sprintf("The last transition rate lambda[%d] = %.4f is not zero. Setting it to 0.",
+                    length(lambda), lambda[length(lambda)]))
+    lambda[length(lambda)] <- 0
   }
 
   survival_times <- numeric(n)
